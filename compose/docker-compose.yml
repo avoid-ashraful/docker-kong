@@ -83,7 +83,11 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    
+      resources:
+        limits:
+          cpus: ${KONG_CPU_LIMIT:-2}
+          memory: ${KONG_MEMORY_LIMIT:-2g}
+
   db:
     image: postgres:9.5
     environment:
