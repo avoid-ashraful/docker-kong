@@ -110,6 +110,10 @@ services:
       - "apparmor:docker-default"
       - no-new-privileges
 
+    # Hardcoded because Docker-compose cant't handle variable interpolations for integer values
+    # see https://github.com/docker/compose/issues/8297
+    pids_limit: 100
+
   db:
     image: postgres:9.5
     environment:
