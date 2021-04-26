@@ -10,7 +10,7 @@ function run_test {
 
   pushd compose
     docker-compose stop
-    docker-compose up -d
+    KONG_INBOUND_PROXY_HOST=127.0.0.1 KONG_INBOUND_SSL_PROXY_HOST=127.0.0.1 docker-compose up -d
   popd
 
   until docker ps -f health=healthy | grep -q ${KONG_DOCKER_TAG}:latest; do
