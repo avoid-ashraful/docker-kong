@@ -36,9 +36,12 @@ function run_test {
       tmessage "Could not clone docker-bench-security"
       tfailure
     else
+      # Tests that are excluded on Mac OS:
+      # * 5.12 is "root fs is mounted as readonly". The tmpfs option isn't supported in docker for mac
+      MAC_EXCLUDE_TESTS=5_12
 
       pushd tests/docker-bench-security
-      if ./docker-bench-security.sh -i kong &&
+      if ./docker-bench-security.sh -i kong -e $MAC_EXCLUDE_TESTS &&
          [ -f "$LOG_OUTPUT" ]
       then
         tmessage "Could not execute docker-bench-security"

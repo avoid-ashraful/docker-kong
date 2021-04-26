@@ -30,7 +30,7 @@ services:
 
   kong-migrations-up:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
-    command: kong migrations up && kong migrations finish
+    command: echo `which kong` && kong migrations up && kong migrations finish
     depends_on:
       - db
     environment:
@@ -80,6 +80,14 @@ services:
       timeout: 10s
       retries: 10
     restart: on-failure
+
+    # tmpfs doesn't work on Docker for Mac, so I can't activate read_only here
+    # read_only: true
+    # FIXME: activate whatever folders Kong needs to write stuff to on Linux
+    # tmpfs:
+    #  - /tmp       # create temp files
+    #  - ${KONG_PREFIX:-/usr/local/kong}
+
     deploy:
       restart_policy:
         condition: on-failure
