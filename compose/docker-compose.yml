@@ -105,6 +105,9 @@ services:
           cpus: ${KONG_CPU_LIMIT:-2}
           memory: ${KONG_MEMORY_LIMIT:-2g}
 
+    security_opt:
+      # FIXME: check that apparmor setting works correctly on Linux (can't test on MacOS)
+      - "apparmor:docker-default"
   db:
     image: postgres:9.5
     environment:

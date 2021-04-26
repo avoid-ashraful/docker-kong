@@ -36,9 +36,10 @@ function run_test {
       tmessage "Could not clone docker-bench-security"
       tfailure
     else
-      # Tests that are excluded on Mac OS:
+      # Tests that are excluded on MacOS:
+      # * 5.1 is AppArmor, which is not available on MacOS
       # * 5.12 is "root fs is mounted as readonly". The tmpfs option isn't supported in docker for mac
-      MAC_EXCLUDE_TESTS=5_12
+      MAC_EXCLUDE_TESTS=5_1,5_12
 
       pushd tests/docker-bench-security
       if ./docker-bench-security.sh -i kong -e $MAC_EXCLUDE_TESTS &&
